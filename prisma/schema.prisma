@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+}
+
+enum PaymentStatus {
+  PAID
+  PENDING
+  PARTIAL
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(STUDENT)
+  createdAt    DateTime @default(now())
+}
+
+model Student {
+  id           String   @id @default(cuid())
+  admissionNo  String   @unique
+  name         String
+  email        String   @unique
+  phone        String?
+  course       String
+  semester     Int
+  section      String
+  dob          DateTime?
+  address      String?
+  guardianName String?
+  createdAt    DateTime @default(now())
+  attendance   Attendance[]
+  examResults  ExamResult[]
+  fees         Fee[]
+}
+
+model Teacher {
+  id         String   @id @default(cuid())
+  employeeNo String   @unique
+  name       String
+  email      String   @unique
+  phone      String?
+  department String
+  subject    String
+  createdAt  DateTime @default(now())
+}
+
+model Attendance {
+  id        String           @id @default(cuid())
+  date      DateTime
+  status    AttendanceStatus
+  subject   String
+  studentId String
+  student   Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  @@unique([date, subject, studentId])
+}
+
+model Exam {
+  id        String       @id @default(cuid())
+  name      String
+  subject   String
+  examDate  DateTime
+  maxMarks  Int
+  results   ExamResult[]
+}
+
+model ExamResult {
+  id        String  @id @default(cuid())
+  marks     Float
+  grade     String
+  studentId String
+  examId    String
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  exam      Exam    @relation(fields: [examId], references: [id], onDelete: Cascade)
+  @@unique([studentId, examId])
+}
+
+model Fee {
+  id          String        @id @default(cuid())
+  academicYear String
+  amount      Float
+  paidAmount  Float         @default(0)
+  status      PaymentStatus
+  dueDate     DateTime
+  studentId   String
+  student     Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}

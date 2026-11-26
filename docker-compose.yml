@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: edumanage-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: edumanage
+    ports:
+      - "5432:5432"
+    volumes:
+      - edumanage_pgdata:/var/lib/postgresql/data
+
+volumes:
+  edumanage_pgdata:

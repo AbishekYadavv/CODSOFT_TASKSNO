@@ -1,0 +1,34 @@
+{
+  "name": "edumanage",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "prisma:generate": "prisma generate",
+    "studio": "prisma studio"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.5",
+    "bcryptjs": "latest",
+    "jose": "latest",
+    "next": "latest",
+    "postcss": "^8.5.33",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwindcss": "^4.3.5"
+  },
+  "devDependencies": {
+    "@prisma/client": "^6.19.3",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "prisma": "^6.19.3",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}
