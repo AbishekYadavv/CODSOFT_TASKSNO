@@ -44,3 +44,4 @@ Demo login:
 
 ## Notes
 This is a working academic project starter/MVP. For production, add stronger validation, password reset, CSRF protection where appropriate, audit logs, pagination, rate limiting, secure secret management, and more granular permissions.
+# CODSOFT_TASKSNO
